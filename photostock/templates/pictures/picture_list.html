@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="card-group">
+  {% for picture in object_list %}
+    <div class="card" style="width: 18rem;">
+      <img src="{{ picture.small_picture.url }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">{{ picture.desc }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+
+{% endblock %}
