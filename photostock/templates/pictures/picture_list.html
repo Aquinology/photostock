@@ -3,12 +3,15 @@
 {% block content %}
 
   <div class="card-group">
-  {% for picture in object_list %}
+  {% for picture in picture_list %}
     <div class="card" style="width: 18rem;">
       <img src="{{ picture.small_picture.url }}" class="card-img-top" alt="...">
       <div class="card-body">
-        <p class="card-text">{{ picture.desc }}</p>
+        <p class="card-text"><a href="{% url 'picture_detail' pk=picture.pk %}">{{ picture.desc }}</a></p>
       </div>
+{#      <div class="card-footer text-muted">#}
+{#        {{ date }}#}
+{#      </div>#}
     </div>
   {% endfor %}
   </div>
