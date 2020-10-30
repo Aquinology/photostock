@@ -1,9 +1,11 @@
 from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from photostock.users.models import User
 
 
 class Picture(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=125)
     picture = models.ImageField(upload_to="images/", null=True, blank=False)
     small_picture = ImageSpecField(source="picture", processors=[ResizeToFill(225, 350)],
