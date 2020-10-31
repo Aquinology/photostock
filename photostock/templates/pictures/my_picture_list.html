@@ -3,17 +3,16 @@
 {% block content %}
 
   <div class="card-columns">
-  {% for picture in picture_list %}
+  {% for picture in my_picture_list %}
     <div class="card" style="width: 18rem;">
       <img src="{{ picture.small_picture.url }}" class="card-img-top" alt="...">
       <div class="card-body">
         <p class="card-text"><a href="{% url 'picture_detail' pk=picture.pk %}">{{ picture.desc }}</a></p>
       </div>
-{#      <div class="card-footer text-muted">#}
-{#        {{ date }}#}
-{#      </div>#}
     </div>
   {% endfor %}
   </div>
+
+  <br><a href="{% url 'picture_new' %}"><button class="btn btn-primary mb-2">Добавить картинку</button></a>
 
 {% endblock %}

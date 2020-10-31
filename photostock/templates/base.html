@@ -46,6 +46,11 @@
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'picture_list' %}">Картинки<span class="sr-only">(current)</span></a>
             </li>
+            {% if request.user.is_authenticated %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'my_picture_list' %}">Мои добавления<span class="sr-only">(current)</span></a>
+              </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">About</a>
             </li>
