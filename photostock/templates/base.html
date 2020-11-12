@@ -48,9 +48,9 @@
                 Категории
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+                {% for type in type_picture_list %}
+                <a class="dropdown-item" href="{% url 'type_picture' pk=type.pk %}">{{ type.name }}</a>
+                {% endfor %}
               </div>
             </li>
             {% if request.user.is_authenticated %}

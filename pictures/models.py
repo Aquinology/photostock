@@ -5,13 +5,21 @@ from photostock.users.models import User
 from django.utils import timezone
 
 
+class TypePicture(models.Model):
+    name = models.CharField(max_length=255, null=False, blank=False)
+
+    def __str__(self):
+        return self.name
+
+
 class Picture(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=125)
+    type = models.ForeignKey(TypePicture, on_delete=models.CASCADE, default=1)
     created_date = models.DateTimeField(default=timezone.now)
     picture = models.ImageField(upload_to="images/", null=True, blank=False)
     small_picture = ImageSpecField(source="picture", processors=[ResizeToFill(225, 350)],
-                                   format="JPEG", options={"quality": 60})
+                                   format="JPEG", options={"quality": 100})
 
     def __str__(self):
         return self.title

@@ -1,9 +1,8 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from .models import Picture
-from django.utils import timezone
+from .models import Picture, TypePicture
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -12,10 +11,23 @@ class PictureList(ListView):
     model = Picture
     context_object_name = "picture_list"
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["date"] = timezone.now()
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["type_picture_list"] = TypePicture.objects.all()
+        return context
+
+
+class TypePictureList(ListView):
+    model = Picture
+
+    def get_queryset(self):
+        picture_type = get_object_or_404(TypePicture, pk=self.kwargs['pk'])
+        return Picture.objects.filter(type=picture_type)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["type_picture_list"] = TypePicture.objects.all()
+        return context
 
 
 class PictureOwnerList(LoginRequiredMixin, ListView):
@@ -33,7 +45,7 @@ class PictureDetail(DetailView):
 
 class PictureCreate(LoginRequiredMixin, CreateView):
     model = Picture
-    fields = ["title", "picture"]
+    fields = ["type", "title", "picture"]
     success_url = reverse_lazy("picture_list")
 
     def form_valid(self, form):
