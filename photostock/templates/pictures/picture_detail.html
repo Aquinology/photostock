@@ -1,16 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+  {{ picture.title }}
+{% endblock title %}
+
 {% block content %}
-
-  <div class="card-group">
-    <div class="card" style="width: 18rem;">
       <img src="{{ picture.picture.url }}" class="card-img-top" alt="...">
-    </div>
-  </div>
-
-  {% if request.user == picture.user %}
-    <br><a href="{% url 'picture_update' pk=picture.pk %}"><button class="btn btn-primary mb-2">Изменить картинку</button></a>
-    <br><a href="{% url 'picture_delete' pk=picture.pk %}"><button class="btn btn-primary mb-2">Удалить картинку</button></a>
-  {% endif %}
-
 {% endblock %}

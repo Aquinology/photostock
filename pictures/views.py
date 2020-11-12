@@ -30,6 +30,10 @@ class PictureOwnerList(LoginRequiredMixin, ListView):
 class PictureDetail(DetailView):
     model = Picture
 
+    def get_queryset(self):
+        num_results = Picture.objects.filter(user=self.request.user).count()
+        return print(len(num_results))
+
 
 class PictureCreate(LoginRequiredMixin, CreateView):
     model = Picture
@@ -46,8 +50,7 @@ class PictureDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("picture_list")
 
     def dispatch(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if self.request.user != obj.user:
+        if self.request.user != self.get_object().user:
             raise Http404("Вы не можете удалять чужие добавления")
         return super(PictureDelete, self).dispatch(request, *args, **kwargs)
 
@@ -58,7 +61,6 @@ class PictureUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("picture_list")
 
     def dispatch(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if self.request.user != obj.user:
+        if self.request.user != self.get_object().user:
             raise Http404("Вы не можете редактировать чужие добавления")
         return super(PictureUpdate, self).dispatch(request, *args, **kwargs)
