@@ -30,14 +30,10 @@ class PictureOwnerList(LoginRequiredMixin, ListView):
 class PictureDetail(DetailView):
     model = Picture
 
-    def get_queryset(self):
-        num_results = Picture.objects.filter(user=self.request.user).count()
-        return print(len(num_results))
-
 
 class PictureCreate(LoginRequiredMixin, CreateView):
     model = Picture
-    fields = ["title", "picture", "desc"]
+    fields = ["title", "picture"]
     success_url = reverse_lazy("picture_list")
 
     def form_valid(self, form):
@@ -57,7 +53,7 @@ class PictureDelete(LoginRequiredMixin, DeleteView):
 
 class PictureUpdate(LoginRequiredMixin, UpdateView):
     model = Picture
-    fields = ["title", "picture", "desc"]
+    fields = ["title", "picture"]
     success_url = reverse_lazy("picture_list")
 
     def dispatch(self, request, *args, **kwargs):

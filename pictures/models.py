@@ -12,7 +12,6 @@ class Picture(models.Model):
     picture = models.ImageField(upload_to="images/", null=True, blank=False)
     small_picture = ImageSpecField(source="picture", processors=[ResizeToFill(225, 350)],
                                    format="JPEG", options={"quality": 60})
-    desc = models.TextField()
 
     def __str__(self):
         return self.title

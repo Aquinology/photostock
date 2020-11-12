@@ -6,13 +6,14 @@
 
 {% block content %}
 
-  <div class="row row-cols-1 row-cols-md-3">
+  <div class="card-columns">
   {% for picture in picture_list %}
     <div class="card" style="width: 18rem;">
       <img src="{{ picture.small_picture.url }}" class="card-img-top" alt="...">
       <div class="card-body">
-        <p class="card-text"><a href="{{ picture.picture.url }}">{{ picture.title }}</a></p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <p class="card-text"><a href="{% url 'picture_detail' pk=picture.pk %}">{{ picture.title }}</a></p>
+        <p class="card-text"><a href="{{ picture.picture.url }}">Скачать</a></p>
+        <p class="card-text"><small class="text-muted">{{ picture.created_date }}</small></p>
       </div>
     </div>
   {% endfor %}
