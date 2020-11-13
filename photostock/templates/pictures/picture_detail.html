@@ -5,5 +5,18 @@
 {% endblock title %}
 
 {% block content %}
+
+  <div class="card-columns">
+    <div class="card" style="width: 18rem;">
       <img src="{{ picture.small_picture.url }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">{{ picture.title }}</p>
+          {% if download == True %}
+          <p class="card-text"><a href="{{ picture.picture.url }}">Скачать</a></p>
+          {% endif %}
+        <p class="card-text"><small class="text-muted">{{ picture.created_date }}</small></p>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
