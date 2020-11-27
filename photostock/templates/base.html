@@ -49,7 +49,8 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 {% for type in type_picture_list %}
-                <a class="dropdown-item" href="{% url 'type_picture' pk=type.pk %}">{{ type.name }}</a>
+                <a class="dropdown-item" href="{% url 'type_picture' pk=type.pk %}">{{ type.name }}
+                  <span class="badge badge-pill badge-info">{{ type.get_count_type_picture }}</span></a>
                 {% endfor %}
               </div>
             </li>

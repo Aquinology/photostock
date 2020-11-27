@@ -8,6 +8,9 @@ from django.utils import timezone
 class TypePicture(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
 
+    def get_count_type_picture(self):
+        return Picture.objects.filter(type=self.id).count()
+
     def __str__(self):
         return self.name
 
