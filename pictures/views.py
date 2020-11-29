@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import Picture, TypePicture
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class PictureList(ListView):
@@ -65,22 +65,28 @@ class PictureCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PictureDelete(LoginRequiredMixin, DeleteView):
+class PictureDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Picture
     success_url = reverse_lazy("my_picture_list")
 
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user != self.get_object().user:
-            raise Http404("Вы не можете удалять чужие добавления")
-        return super().dispatch(request, *args, **kwargs)
+    def test_func(self):
+        return self.get_object().user == self.request.user
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if self.request.user != self.get_object().user:
+    #         raise Http404("Вы не можете удалять чужие добавления")
+    #     return super().dispatch(request, *args, **kwargs)
 
 
-class PictureUpdate(LoginRequiredMixin, UpdateView):
+class PictureUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Picture
     fields = ["title", "picture"]
     success_url = reverse_lazy("my_picture_list")
 
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user != self.get_object().user:
-            raise Http404("Вы не можете редактировать чужие добавления")
-        return super().dispatch(request, *args, **kwargs)
+    def test_func(self):
+        return self.get_object().user == self.request.user
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if self.request.user != self.get_object().user:
+    #         raise Http404("Вы не можете редактировать чужие добавления")
+    #     return super().dispatch(request, *args, **kwargs)
