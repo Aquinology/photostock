@@ -1,2 +1,4 @@
 # photostock
-My Photo Stock
+Repository of photographs and illustrations
+
+Technologies: Python, Django, CookieCutter
